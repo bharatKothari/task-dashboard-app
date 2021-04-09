@@ -9,6 +9,7 @@ import Signup from './components/Signup/signup';
 import Profile from './components/Profile/userProfile';
 import CreateTask from './components/Tasks/createTask';
 import ViewTask from './components/Tasks/viewTask';
+import SubmitTask from './components/Tasks/submitTask'
 
 function App() {
   return (
@@ -19,7 +20,6 @@ function App() {
             <NavLink activeClassName="active" to="/login">Login</NavLink>
             <NavLink activeClassName="active" to="/signup">Signup</NavLink>
             <NavLink activeClassName="active" to="/profile">Profile</NavLink>
-            <NavLink exact activeClassName="active" to="/tasks/new">New Task</NavLink>
             <NavLink exact activeClassName="active" to="/tasks/:id">Tasks</NavLink>
           </div>
           <div className="content">
@@ -29,6 +29,7 @@ function App() {
               <PrivateRoute path="/profile" component={Profile} />
               <PrivateRoute exact path="/tasks/new" component={CreateTask} />
               <PrivateRoute exact path="/tasks/:id" component={ViewTask} />
+              <PrivateRoute exact path="/tasks/:id/edit" component={SubmitTask} />
             </Switch>
           </div>
         </div>

@@ -21,6 +21,7 @@ function Task(props) {
             Details : {task.details}<br />
             Time : {task.time}<br />
             Points : {task.points}<br />
+            Attachments : {task.attachments}
         </div>
     )
 }
