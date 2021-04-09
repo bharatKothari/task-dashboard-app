@@ -1,21 +1,19 @@
 import React, { useState } from 'react';
-import axios from '../utils/axios';
-import {setUserSession} from '../utils/common'
+import axios from '../../utils/axios';
+import { setUserSession } from '../../utils/common'
 
 function Login(props) {
   const email = useFormInput('');
   const password = useFormInput('');
-  const [error, setError] = useState(null);
 
   // handle button click of login form
   const handleLogin = () => {
-      axios.post('/users/login',{
-          email:email.value,
-          password:password.value
-        })
-        .then((res) => {
-            setUserSession(res.token,res.user)
-        })
+    axios.post('/users/login', {
+      email: email.value,
+      password: password.value
+    }).then((res) => {
+      setUserSession(res.data.token, res.data.user)
+    })
   }
 
   return (
@@ -25,11 +23,10 @@ function Login(props) {
         E-Mail<br />
         <input type="text" {...email} />
       </div>
-      <div style={{ marginTop: 10 }}>
+      <div>
         Password<br />
         <input type="password" {...password} />
       </div>
-      {error && <><small style={{ color: 'red' }}>{error}</small><br /></>}<br />
       <input type="button" value='Login' onClick={handleLogin} /><br />
     </div>
   );
