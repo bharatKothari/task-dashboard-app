@@ -7,6 +7,7 @@ function Login(props) {
     const email = useFormInput('');
     const password = useFormInput('');
     const role = useFormInput('');
+    const [error, setError] = useState(null);
 
     const handleLogin = () => {
         axios.post('/users/signup', {
@@ -15,8 +16,12 @@ function Login(props) {
             password: password.value,
             role: role.value
         }).then((res) => {
-            setUserSession(res.token, res.user)
-        })
+            setUserSession(res.data.token, res.data.user)
+            props.history.push('/profile')
+        }).catch(error => {
+            if (error.response.status === 409) setError('E-mail already registered');
+            else setError("Something went wrong. Please try again later.");
+        });
     }
 
     return (
@@ -38,6 +43,7 @@ function Login(props) {
                 Password<br />
                 <input type="password" {...password} />
             </div>
+            {error && <><small style={{ color: 'red' }}>{error}</small><br /></>}<br />
             <input type="button" value='Signup' onClick={handleLogin} /><br />
         </div>
     );

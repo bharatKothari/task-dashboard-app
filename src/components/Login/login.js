@@ -5,6 +5,7 @@ import { setUserSession } from '../../utils/common'
 function Login(props) {
   const email = useFormInput('');
   const password = useFormInput('');
+  const [error, setError] = useState(null);
 
   // handle button click of login form
   const handleLogin = () => {
@@ -12,8 +13,13 @@ function Login(props) {
       email: email.value,
       password: password.value
     }).then((res) => {
+      console.log(res)
       setUserSession(res.data.token, res.data.user)
-    })
+      props.history.push('/profile')
+    }).catch(error => {
+      if (error.response.status === 401) setError('Invalid E-mail or Password');
+      else setError("Something went wrong. Please try again later.");
+    });
   }
 
   return (
@@ -27,6 +33,7 @@ function Login(props) {
         Password<br />
         <input type="password" {...password} />
       </div>
+      {error && <><small style={{ color: 'red' }}>{error}</small><br /></>}<br />
       <input type="button" value='Login' onClick={handleLogin} /><br />
     </div>
   );
