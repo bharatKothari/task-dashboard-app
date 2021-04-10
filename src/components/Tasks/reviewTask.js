@@ -15,6 +15,18 @@ function Task(props) {
             console.log(error)
         })
     }, [])
+
+    const handleSubmit = (e) => {
+        const status = e.target.value
+        axios.put('/tasks/'+props.match.params.id+'/review',{
+            status:status
+        },{
+            headers: {
+                Authorization: 'Bearer ' + getToken()
+            }
+        })
+    }
+
     return (
         <div>
             Subject : {task.subject}<br />
@@ -23,7 +35,9 @@ function Task(props) {
             Points : {task.points}<br />
             Creation Date:{task.creationDate}<br />
             Submission : {task.submissions}<br />
-            Attachments : {task.attachments}
+            Attachments : {task.attachments}<br />
+            <input type="button" value='Accepted' onClick={handleSubmit} /><br />
+            <input type="button" value='Rejected' onClick={handleSubmit} /><br />
         </div>
     )
 }
